@@ -1,0 +1,1245 @@
+<!DOCTYPE HTML>
+
+<html>
+    <!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Vexo.gg - Sklep</title>
+
+    <style>
+        /* =====================================================
+           USTAWIENIA GŁÓWNE
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #08090d;
+            color: white;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+
+        /* =====================================================
+           GÓRNE MENU
+        ===================================================== */
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 75px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            background: rgba(5, 6, 10, 0.92);
+            border-bottom: 1px solid #242630;
+
+            backdrop-filter: blur(12px);
+
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: #ff174f;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            color: #aaa;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: #ff174f;
+        }
+
+        .cart-button {
+            background: #ff174f;
+            border: none;
+            color: white;
+
+            padding: 11px 18px;
+
+            border-radius: 7px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .cart-button:hover {
+            background: #d9003c;
+            transform: translateY(-2px);
+        }
+
+        #cart-count {
+            background: white;
+            color: #ff174f;
+
+            padding: 3px 7px;
+
+            border-radius: 50%;
+
+            margin-left: 5px;
+
+            font-size: 12px;
+        }
+
+
+        /* =====================================================
+           GŁÓWNA SEKCJA / TŁO
+        ===================================================== */
+
+        .hero {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+
+            padding: 120px 10% 80px;
+
+            /*
+                TUTAJ WSTAW SWOJE TŁO.
+
+                Jeżeli plik nazywa się "tlo.jpg"
+                i jest w tym samym folderze co index.html:
+
+                url("tlo.jpg")
+            */
+
+            background-image:
+                linear-gradient(
+                    rgba(0, 0, 0, 0.50),
+                    rgba(0, 0, 0, 0.75)
+                ),
+                url("https://sklep.foto-kurier.pl/produkt/tlo-plastikowe-100-x-130-cm-niebieskie-ciemne-matowe/");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .small-title {
+            color: #ff174f;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            letter-spacing: 3px;
+
+            margin-bottom: 15px;
+        }
+
+        .hero h1 {
+            font-size: clamp(50px, 8vw, 95px);
+
+            line-height: 0.95;
+
+            font-weight: 900;
+        }
+
+        .hero h1 span {
+            color: #ff174f;
+        }
+
+        .hero p {
+            color: #c0c0c0;
+
+            font-size: 18px;
+
+            line-height: 1.6;
+
+            margin: 25px 0 30px;
+        }
+
+        .main-button {
+            display: inline-block;
+
+            background: #ff174f;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 15px 24px;
+
+            border-radius: 7px;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+        .main-button:hover {
+            background: #d9003c;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =====================================================
+           SKLEP
+        ===================================================== */
+
+        .shop {
+            min-height: 100vh;
+
+            padding: 110px 7%;
+
+            background: #090a0f;
+        }
+
+        .section-title {
+            text-align: center;
+
+            margin-bottom: 45px;
+        }
+
+        .section-title h2 {
+            font-size: 42px;
+
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: #777;
+        }
+
+
+        /* =====================================================
+           WYSZUKIWANIE
+        ===================================================== */
+
+        .search-box {
+            max-width: 500px;
+
+            margin: 0 auto 40px;
+        }
+
+        .search-box input {
+            width: 100%;
+
+            padding: 15px 18px;
+
+            background: #13151c;
+
+            border: 1px solid #292c37;
+
+            color: white;
+
+            border-radius: 8px;
+
+            outline: none;
+
+            font-size: 15px;
+        }
+
+        .search-box input:focus {
+            border-color: #ff174f;
+        }
+
+
+        /* =====================================================
+           PRODUKTY
+        ===================================================== */
+
+        .products {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
+            gap: 25px;
+
+            max-width: 1200px;
+
+            margin: auto;
+        }
+
+        .product {
+            background: #11131a;
+
+            border: 1px solid #232631;
+
+            border-radius: 10px;
+
+            overflow: hidden;
+
+            transition: 0.25s;
+        }
+
+        .product:hover {
+            transform: translateY(-6px);
+
+            border-color: #ff174f;
+
+            box-shadow:
+                0 10px 30px rgba(255, 23, 79, 0.12);
+        }
+
+        .product-image {
+            height: 210px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 70px;
+
+            background:
+                radial-gradient(
+                    circle,
+                    #401027,
+                    #11131a 70%
+                );
+        }
+
+        .product-info {
+            padding: 22px;
+        }
+
+        .product-info h3 {
+            font-size: 20px;
+
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: #888;
+
+            line-height: 1.5;
+
+            font-size: 14px;
+
+            min-height: 42px;
+        }
+
+        .product-bottom {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-top: 20px;
+        }
+
+        .price {
+            color: #ff174f;
+
+            font-size: 20px;
+
+            font-weight: bold;
+        }
+
+        .add-button {
+            background: #ff174f;
+
+            border: none;
+
+            color: white;
+
+            padding: 10px 15px;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+        .add-button:hover {
+            background: #d9003c;
+        }
+
+
+        /* =====================================================
+           KOSZYK
+        ===================================================== */
+
+        .cart-modal {
+            position: fixed;
+
+            inset: 0;
+
+            background: rgba(0, 0, 0, 0.75);
+
+            display: none;
+
+            justify-content: flex-end;
+
+            z-index: 2000;
+        }
+
+        .cart-modal.active {
+            display: flex;
+        }
+
+        .cart {
+            width: min(500px, 100%);
+
+            height: 100%;
+
+            background: #0e1016;
+
+            border-left: 1px solid #292c36;
+
+            padding: 30px;
+
+            overflow-y: auto;
+        }
+
+        .cart-header {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 25px;
+        }
+
+        .cart-header h2 {
+            font-size: 28px;
+        }
+
+        .close-button {
+            border: none;
+
+            background: transparent;
+
+            color: #aaa;
+
+            font-size: 25px;
+
+            cursor: pointer;
+        }
+
+        .close-button:hover {
+            color: white;
+        }
+
+
+        /* =====================================================
+           PRODUKT W KOSZYKU
+        ===================================================== */
+
+        .cart-item {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            padding: 18px 0;
+
+            border-bottom: 1px solid #252832;
+        }
+
+        .cart-item-left {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+        .cart-icon {
+            width: 45px;
+
+            height: 45px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #191b24;
+
+            border-radius: 7px;
+
+            font-size: 24px;
+        }
+
+        .cart-item h4 {
+            margin-bottom: 5px;
+        }
+
+        .cart-item-price {
+            color: #ff174f;
+        }
+
+        .remove-button {
+            border: none;
+
+            background: transparent;
+
+            color: #777;
+
+            font-size: 18px;
+
+            cursor: pointer;
+        }
+
+        .remove-button:hover {
+            color: red;
+        }
+
+
+        /* =====================================================
+           PODSUMOWANIE
+        ===================================================== */
+
+        .cart-summary {
+            margin-top: 30px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #292c36;
+        }
+
+        .total {
+            display: flex;
+
+            justify-content: space-between;
+
+            font-size: 21px;
+
+            font-weight: bold;
+        }
+
+        .total span {
+            color: #ff174f;
+        }
+
+        .checkout-button {
+            width: 100%;
+
+            margin-top: 20px;
+
+            padding: 16px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            background: #ff174f;
+
+            color: white;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            font-size: 15px;
+        }
+
+        .checkout-button:hover {
+            background: #d9003c;
+        }
+
+
+        /* =====================================================
+           PUSTY KOSZYK
+        ===================================================== */
+
+        .empty-cart {
+            text-align: center;
+
+            color: #777;
+
+            padding: 50px 0;
+        }
+
+
+        /* =====================================================
+           STOPKA
+        ===================================================== */
+
+        footer {
+            padding: 35px;
+
+            text-align: center;
+
+            background: #06070a;
+
+            color: #666;
+
+            border-top: 1px solid #20222b;
+        }
+
+
+        /* =====================================================
+           TELEFONY
+        ===================================================== */
+
+        @media (max-width: 850px) {
+
+            header {
+                padding: 0 20px;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .hero {
+                padding: 120px 25px 80px;
+            }
+
+            .shop {
+                padding: 80px 20px;
+            }
+
+            .products {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 55px;
+            }
+
+            .cart {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+<!-- =====================================================
+     MENU
+===================================================== -->
+
+<header>
+
+    <div class="logo">
+        Vexo.gg<span>SHOP</span>
+    </div>
+
+    <nav>
+        <a href="#home">STRONA GŁÓWNA</a>
+        <a href="#shop">SKLEP</a>
+    </nav>
+
+    <button
+        class="cart-button"
+        onclick="openCart()"
+    >
+        🛒 KOSZYK
+
+        <span id="cart-count">
+            0
+        </span>
+    </button>
+
+</header>
+
+
+<!-- =====================================================
+     STRONA GŁÓWNA
+===================================================== -->
+
+<section
+    id="home"
+    class="hero"
+>
+
+    <div class="hero-content">
+
+        <div class="small-title">
+            WITAJ W Vexo.gg
+        </div>
+
+        <h1>
+            TWÓJ
+            <span>SKLEP</span>
+        </h1>
+
+        <p>
+            Znajdź produkty, których szukasz,
+            dodaj je do koszyka i przygotuj
+            swoje zamówienie.
+        </p>
+
+        <a
+            href="#shop"
+            class="main-button"
+        >
+            🛍️ PRZEJDŹ DO SKLEPU
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SKLEP
+===================================================== -->
+
+<section
+    id="shop"
+    class="shop"
+>
+
+    <div class="section-title">
+
+        <div class="small-title">
+            NASZA OFERTA
+        </div>
+
+        <h2>
+            SKLEP
+        </h2>
+
+        <p>
+            Wybierz interesujący Cię produkt.
+        </p>
+
+    </div>
+
+
+    <!-- WYSZUKIWARKA -->
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="search"
+            placeholder="🔎 Wyszukaj produkt..."
+            oninput="searchProducts()"
+        >
+
+    </div>
+
+
+    <!-- PRODUKTY -->
+
+    <div
+        id="products"
+        class="products"
+    ></div>
+
+</section>
+
+
+<!-- =====================================================
+     KOSZYK
+===================================================== -->
+
+<div
+    id="cart-modal"
+    class="cart-modal"
+>
+
+    <div class="cart">
+
+        <div class="cart-header">
+
+            <h2>
+                🛒 Koszyk
+            </h2>
+
+            <button
+                class="close-button"
+                onclick="closeCart()"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <!-- PRODUKTY W KOSZYKU -->
+
+        <div id="cart-items"></div>
+
+
+        <!-- PODSUMOWANIE -->
+
+        <div class="cart-summary">
+
+            <div class="total">
+
+                <span>
+                    Razem:
+                </span>
+
+                <span id="cart-total">
+                    0.00 zł
+                </span>
+
+            </div>
+
+            <button
+                class="checkout-button"
+                onclick="checkout()"
+            >
+                💳 PRZEJDŹ DO PŁATNOŚCI
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     STOPKA
+===================================================== -->
+
+<footer>
+
+    © 2026 Vexo.gg — Twój sklep internetowy
+
+</footer>
+
+
+<script>
+
+    /* =====================================================
+       PRODUKTY
+
+       Tutaj możesz dodawać własne produkty.
+    ===================================================== */
+
+    const products = [
+
+        {
+            id: 1,
+            name: "VIP PREMIUM",
+            description: "Ekskluzywny dostęp do dodatkowych funkcji.",
+            price: 29.99,
+            icon: "👑"
+        },
+
+        {
+            id: 2,
+            name: "RANGA ELITE",
+            description: "Specjalna ranga dla najbardziej aktywnych.",
+            price: 49.99,
+            icon: "⚡"
+        },
+
+        {
+            id: 3,
+            name: "COINS 1000",
+            description: "1000 wirtualnych monet.",
+            price: 2.99,
+            icon: "🪙"
+        },
+
+        {
+            id: 4,
+            name: "PREMIUM BOX",
+            description: "Specjalny zestaw wyjątkowych przedmiotów.",
+            price: 39.99,
+            icon: "🎁"
+        },
+
+        {
+            id: 5,
+            name: "ULTRA VIP",
+            description: "Najwyższy poziom dostępu.",
+            price: 79.99,
+            icon: "💎"
+        },
+
+        {
+            id: 6,
+            name: "BOOST",
+            description: "Specjalny boost do Twojego konta.",
+            price: 14.99,
+            icon: "🚀"
+        }
+
+    ];
+
+
+    /* =====================================================
+       KOSZYK
+    ===================================================== */
+
+    let cart = [];
+
+
+    /* =====================================================
+       WYŚWIETLANIE PRODUKTÓW
+    ===================================================== */
+
+    function showProducts(list = products) {
+
+        const container =
+            document.getElementById("products");
+
+        container.innerHTML = "";
+
+
+        if (list.length === 0) {
+
+            container.innerHTML = `
+                <p style="
+                    color:#777;
+                    text-align:center;
+                    grid-column:1/-1;
+                ">
+                    Nie znaleziono produktu.
+                </p>
+            `;
+
+            return;
+        }
+
+
+        list.forEach(product => {
+
+            container.innerHTML += `
+
+                <div class="product">
+
+                    <div class="product-image">
+                        ${product.icon}
+                    </div>
+
+                    <div class="product-info">
+
+                        <h3>
+                            ${product.name}
+                        </h3>
+
+                        <p class="description">
+                            ${product.description}
+                        </p>
+
+                        <div class="product-bottom">
+
+                            <span class="price">
+                                ${product.price.toFixed(2)} zł
+                            </span>
+
+                            <button
+                                class="add-button"
+                                onclick="addToCart(${product.id})"
+                            >
+                                DODAJ
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        });
+
+    }
+
+
+    /* =====================================================
+       DODAWANIE DO KOSZYKA
+    ===================================================== */
+
+    function addToCart(id) {
+
+        const product =
+            products.find(
+                product => product.id === id
+            );
+
+
+        if (!product) return;
+
+
+        cart.push(product);
+
+
+        updateCart();
+
+
+        alert(
+            `Dodano "${product.name}" do koszyka!`
+        );
+
+    }
+
+
+    /* =====================================================
+       USUWANIE Z KOSZYKA
+    ===================================================== */
+
+    function removeFromCart(index) {
+
+        cart.splice(index, 1);
+
+        updateCart();
+
+    }
+
+
+    /* =====================================================
+       AKTUALIZACJA KOSZYKA
+    ===================================================== */
+
+    function updateCart() {
+
+        const container =
+            document.getElementById("cart-items");
+
+        const count =
+            document.getElementById("cart-count");
+
+        const totalElement =
+            document.getElementById("cart-total");
+
+
+        count.textContent = cart.length;
+
+
+        container.innerHTML = "";
+
+
+        if (cart.length === 0) {
+
+            container.innerHTML = `
+
+                <div class="empty-cart">
+
+                    🛒
+
+                    <br><br>
+
+                    Twój koszyk jest pusty.
+
+                    <br>
+
+                    Dodaj jakiś produkt
+                    ze sklepu.
+
+                </div>
+
+            `;
+
+            totalElement.textContent =
+                "0.00 zł";
+
+            return;
+        }
+
+
+        let total = 0;
+
+
+        cart.forEach((product, index) => {
+
+            total += product.price;
+
+
+            container.innerHTML += `
+
+                <div class="cart-item">
+
+                    <div class="cart-item-left">
+
+                        <div class="cart-icon">
+                            ${product.icon}
+                        </div>
+
+                        <div>
+
+                            <h4>
+                                ${product.name}
+                            </h4>
+
+                            <div class="cart-item-price">
+                                ${product.price.toFixed(2)} zł
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <button
+                        class="remove-button"
+                        onclick="removeFromCart(${index})"
+                    >
+                        ✕
+                    </button>
+
+                </div>
+
+            `;
+
+        });
+
+
+        totalElement.textContent =
+            total.toFixed(2) + " zł";
+
+    }
+
+
+    /* =====================================================
+       OTWIERANIE KOSZYKA
+    ===================================================== */
+
+    function openCart() {
+
+        document
+            .getElementById("cart-modal")
+            .classList
+            .add("active");
+
+    }
+
+
+    /* =====================================================
+       ZAMYKANIE KOSZYKA
+    ===================================================== */
+
+    function closeCart() {
+
+        document
+            .getElementById("cart-modal")
+            .classList
+            .remove("active");
+
+    }
+
+
+    /* =====================================================
+       WYSZUKIWANIE
+    ===================================================== */
+
+    function searchProducts() {
+
+        const search =
+            document
+                .getElementById("search")
+                .value
+                .toLowerCase();
+
+
+        const filtered =
+            products.filter(product =>
+
+                product.name
+                    .toLowerCase()
+                    .includes(search)
+
+                ||
+
+                product.description
+                    .toLowerCase()
+                    .includes(search)
+
+            );
+
+
+        showProducts(filtered);
+
+    }
+
+
+    /* =====================================================
+       KASA
+
+       Na razie jest to demonstracja.
+       Prawdziwe płatności dodamy później.
+    ===================================================== */
+
+    function checkout() {
+
+        if (cart.length === 0) {
+
+            alert(
+                "Twój koszyk jest pusty."
+            );
+
+            return;
+        }
+
+
+        alert(
+            "Następny krok: podłączymy tutaj prawdziwy system płatności."
+        );
+
+    }
+
+
+    /* =====================================================
+       START
+    ===================================================== */
+
+    showProducts();
+
+    updateCart();
+
+</script>
+
+</body>
+</html>
+
+
+<head>
+  <title>Untitled</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
